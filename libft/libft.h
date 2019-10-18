@@ -91,5 +91,6 @@ void				ft_print_matri(int **matr, int x, int y);
 void				ft_print_massi(int *mass, int x);
 int					ft_min(int a, int b);
 int					ft_max(int a, int b);
+int 				get_next_line(int fd, char **line);
 
 #endif
