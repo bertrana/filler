@@ -12,45 +12,36 @@
 
 #include "libft.h"
 
-void		err_e(void)
+static int		ft_isspace(int c)
 {
-	write(2, "156Can't work with file\n",
-			ft_strlen("156Can't work with file\n"));
-	exit(EXIT_FAILURE);
+	return ((c >= 9 && c <= 13) || c == ' ');
 }
 
-static int	find_number(const char **str)
+int				ft_atoi(const char *str)
 {
-	int	min;
+	long	res;
+	int		sign;
+	int		any;
 
-	min = 1;
-	while ((**str == ' ' || (**str < 14 && **str > 8)) && **str)
-		(*str)++;
-	if (**str == '-' || **str == '+')
-	{
-		if (**str == '-')
-			min = -1;
-		(*str)++;
-	}
-	return (min);
-}
-
-int			ft_atoi(const char *str)
-{
-	int	i;
-	int	min;
-
-	min = find_number(&str);
-	i = 0;
-	while (ft_isdigit(*str) && *str)
-	{
-		i = i * 10 + (*str - '0') * min;
+	any = 0;
+	sign = 0;
+	res = 0;
+	while (*str && ft_isspace(*str))
 		str++;
-		if (*str && !(ft_isdigit(*str)) && (*str != ' '))
-			err_e();
-		if (*str && ((i * 10 < -2147483648 && *str == '9') ||
-				(i * 10 > 2147483647 && (*str == '8' || *str == '9'))))
-			err_e();
-	}
-	return (i);
+	if (*str == '-')
+		sign++;
+	if (*str == '-' || *str == '+')
+		str++;
+	str--;
+	while (*(++str) && ft_isdigit(*str))
+		if (any < 0 || res > LONG_MAX / 10 ||
+			(res == LONG_MAX / 10 && (*str - '0') > LONG_MAX % 10))
+			any = -1;
+		else
+			res = res * 10 + (*str - '0');
+	if (any < 0)
+		res = (!sign) ? -1 : 0;
+	else
+		res = ((sign) ? -res : res);
+	return (res);
 }

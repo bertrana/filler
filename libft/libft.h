@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
+# define BUFF_SIZE 21
 
 typedef struct		s_list
 {
@@ -91,6 +93,6 @@ void				ft_print_matri(int **matr, int x, int y);
 void				ft_print_massi(int *mass, int x);
 int					ft_min(int a, int b);
 int					ft_max(int a, int b);
-int 				get_next_line(int fd, char **line);
+int					get_next_line(int fd, char **line);
 
 #endif

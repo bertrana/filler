@@ -12,32 +12,30 @@
 
 #include "filler.h"
 
-int 	start_map(t_fil fil, char *str)
+void	init_struct(t_filler fil, char *line)
 {
+	int h;
+	int w;
 
-	if (ft_strchr(str, '#'))
-		return (0);
-
-}
-
-int		ft_init(t_fil fil, char *line)
-{
-	
-	return (0);
-}
-
-int		main(void)
-{
-	char	*line;
-	t_fil	fil;
-
-	fil.piece = NULL;
-	start_map(fil, line);
-	while (get_next_line(0, &line) > 0)
-	{
-		if (ft_init(fil, line))
-			filler(fil);
+	while (get_next_line(0, &line) && !ft_strstr(line, "Plateau"))
 		free(line);
-	}
+	w = ft_atoi(ft_strchr(line, ' '));
+	h = ft_atoi(ft_strchr(ft_strchr(line, ' ') + 1, ' '));
+	printf("h = %d\nw = %d\n", h, w);
+}
+
+int 	main(void)
+{
+	char		*line;
+	t_filler	filler;
+
+	line = NULL;
+	while (get_next_line(0, &line) && (!ft_strstr(line, "pbondoer") ||
+		line[0] != '$'))
+		free(line);
+	filler.player = (char)(line[10] == '1' ? 'O' : 'X');
+	filler.enemy = (char)(line[10] == '1' ? 'X' : 'O');
+	printf("player = %c\nenemy = %c\n", filler.player, filler.enemy);
+	init_struct(filler, line);
 	return (0);
 }

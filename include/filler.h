@@ -15,22 +15,21 @@
 # include "stdio.h"
 # include "../libft/libft.h"
 
-
 typedef struct	s_map
 {
-	int			h_map;
-	int			w_map;
-	int			**num_map;
+	int			h;
+	int			w;
+	int			**map;
 }				t_map;
 
-typedef struct	s_fil
+typedef struct	s_filler
 {
 	char		enemy;
 	char		player;
 	t_map		*board;
 	t_map		*piece;
-	int			x;
+	int			x; //result
 	int 		y;
-}				t_fil;
+}				t_filler;
 
 #endif
