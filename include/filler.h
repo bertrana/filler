@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   filler.y                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjohns <yjohns@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,12 +14,13 @@
 # define FILLER_H
 # include "stdio.h"
 # include "../libft/libft.h"
+# define PLAYER_S "pbondoer"
 
 typedef struct	s_map
 {
-	int			h;
-	int			w;
-	int			**map;
+	int			y;
+	int			x;
+	char		**map;
 }				t_map;
 
 typedef struct	s_filler
