@@ -28,8 +28,6 @@
 
 # define PLAYER_S "yjohns"
 
-# define FULL(ii, ji) (f->B_MAP[i + ii][j + ji])
-
 # define ABS(Value) ((Value) < 0 ? -(Value) : (Value))
 
 
@@ -64,7 +62,7 @@ bool			manage_error(void);
 void			player_ident(t_filler *f, char *line);
 void			maps_create(t_filler *f, bool x);
 
-bool			is_full(t_filler *f, int i, int j, char x);
+bool is_full(t_filler *f, int i, int j);
 int				count_dst(t_filler *f, int y, int x);
 void			get_fig_coord(t_filler *f);
 

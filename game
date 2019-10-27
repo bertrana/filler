@@ -318,6 +318,62 @@ Piece 2 3:
 ***
 <got (O): [9, 6]
 
+./resources/filler_vm -f resources/maps/map00 -p1 resources/players/superjeannot.filler -p2 resources/players/yjohns.filler
+
+
+# -------------------------------------------- #
+#                                              #
+# 42 / filler VM Developped by: Hcao - Abanlin #
+#                                              #
+# -------------------------------------------- #
+launched ./yjohns.filler
+$$$ exec p1 : [resources/players/superjeannot.filler]
+launched resources/players/superjeannot.filler
+$$$ exec p2 : [./yjohns.filler]
+Plateau 15 17:
+    01234567890123456
+000 .................
+001 .................
+002 .................
+003 .................
+004 .................
+005 ....OOOOOOOOOO...
+006 ...OOOXXXXXOOO...
+007 ...OOXXXXXOOOO...
+008 .OOOOXXXXOOxxX...
+009 OOOOXXXXXXXXXX...
+010 .OOOOOXXXXXX.....
+011 .OOOOOOOOXXXXX...
+012 .OOOXXXXXXXXXXX..
+013 ..OXXXXXXX.......
+014 .XXXX............
+Piece 2 1:
+*
+*
+
+Plateau 15 17:
+    01234567890123456
+000 XXXXXXXXXXXXXXXXX
+001 XXXXXXXXXXXXXXXXX
+002 XXXXXOOOOOOXXXXXX
+003 XOOOOOOOOOOOOOXXX
+004 XOOOOOOOOOOOOOXXX
+005 XOOOOOOOOOOOOOXXX
+006 OOOOOOOOOOOOOOXXX
+007 OOOOOOXXXXXXXXXXX
+008 OOOOOOOXXXXXXXXXX
+009 XOOOOOOOOOOXXXXXX
+010 XXOOOOOOOOXXXXXXX
+011 XXXOOOXXXXXXXXX.X
+012 XXXOOXXXXXXXXXX.X
+013 xXXXXXXXXXXXXX..X
+014 XXXXXXXXXXXX...XX
+Piece 2 2:
+**
+**
+
+
+
 
 # -------------------------------------------- #
 #                                              #
@@ -328,40 +384,6 @@ launched ./yjohns.filler
 $$$ exec p1 : [./yjohns.filler]
 launched resources/players/superjeannot.filler
 $$$ exec p2 : [resources/players/superjeannot.filler]
-Plateau 15 17:
-    01234567890123456
-000 .................
-001 .................
-002 .................
-003 .................
-004 .................
-005 .................
-006 .................
-007 ..........X......
-008 ..OOOOOOOOXX.....
-009 ......oOoOXX.....
-010 ......ooo.X......
-011 ..........XXX.X..
-012 ..........XXXXX..
-013 .................
-014 .................
-Piece 2 2:
-.*
-**
-
-
-
-# -------------------------------------------- #
-#                                              #
-# 42 / filler VM Developped by: Hcao - Abanlin #
-#                                              #
-# -------------------------------------------- #
-launched ./pbondoer.filler
-$$$ exec p1 : [./pbondoer.filler]
-launched resources/players/superjeannot.filler
-$$$ exec p2 : [resources/players/superjeannot.filler]
-
-
 Plateau 100 99:
     012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678
 000 .................................OOOOOOOO..........................................................

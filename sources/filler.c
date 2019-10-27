@@ -32,10 +32,10 @@ static int	try_to_fit(t_filler *f, int y, int x, int ind)
 	int		d;
 	int		tmp;
 
-	i = -1;
+	i = 0;
 	mine = 0;
 	d = INT32_MAX;
-	while (++i < f->piece_num)
+	while (i < f->piece_num)
 	{
 		res[X] = x + f->piece_x[i] - f->piece_x[ind];
 		res[Y] = y + f->piece_y[i] - f->piece_y[ind];
@@ -44,28 +44,30 @@ static int	try_to_fit(t_filler *f, int y, int x, int ind)
 		if (!help_try_to_fit(f, res, i, &mine))
 			return (0);
 		tmp = count_dst(f, res[Y], res[X]);
-		if (d >= tmp && (d = tmp) | 1)
+		if (d >= tmp && (d = tmp))
 			(d != INT32_MAX) && (f->index = ind);
+		i++;
 	}
 	return (d);
 }
 
-static void	best_solution(t_filler *f, int i, int j)
+static void	algorithm(t_filler *f, int i, int j)
 {
 	int		d;
 	int		index;
 
 	d = 0;
-	index = -1;
-	while (++index < f->piece_num)
+	index = 0;
+	while (index < f->piece_num)
 	{
 		d = try_to_fit(f, i, j, index);
 		if (d != 0 && f->dst > d)
 		{
-			(f->dst = d | 1)
-			&& ((f->x = j - f->piece_x[f->index]) | 1)
-			&& (f->y = i - f->piece_y[f->index]);
+			f->dst = d;
+			(f->x = j - f->piece_x[f->index]);
+			(f->y = i - f->piece_y[f->index]);
 		}
+		index++;
 	}
 }
 
@@ -81,12 +83,13 @@ void		game(t_filler *f)
 	get_fig_coord(f);
 	while (f->B_MAP[i])
 	{
-		j = -1;
-		while (f->B_MAP[i][++j])
+		j = 0;
+		while (f->B_MAP[i][j])
 		{
 			if (ft_tolower(f->B_MAP[i][j]) == f->player
-				&& !is_full(f, i, j, f->player))
-				best_solution(f, i, j);
+				&& !is_full(f, i, j))
+				algorithm(f, i, j);
+			j++;
 		}
 		i++;
 	}
