@@ -10,64 +10,51 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = yjohns.filler
+.PHONY: $(LIB) all clean fclean re mclean mfclean mre
 
-CC = gcc
-FLAGS = -Wall -Wextra -Werror
-LIBRARIES = -lft -L$(LIBFT_DIR)
-INC = -I$(HEADERS_DIR) -I$(LIBFT_DIR)
+NAME :=			resources/players/yjohns.filler
 
-LIBFT = $(LIBFT_DIR) libft.a
-LIBFT_DIR = ./libft/
+SRC_PATH :=		sources/
+INC_PATH :=		include/
+LIB_PATH :=		libft/
+OBJ_PATH :=		.obj/
 
-HEADERS_LIST = filler.h
-HEADERS_DIR = ./include/
-HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
+CC :=			clang
+CFLAGS :=		-Wall -Werror -Wextra -Wstrict-overflow=2
+IFLAGS :=		-I $(INC_PATH) -I $(LIB_PATH)
+LFLAGS :=		-lft -L $(LIB_PATH)
 
-SRC_DIR = ./sources/
-SRC_LIST = main.c
-SRC = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
+LIB :=			$(LIB_PATH)libft.a
+HFILES :=		filler
+FILES :=		main filler functions
 
-OBJ_DIR = objects/
-OBJ_LIST = $(patsubst %.c, %.o, $(SRC_LIST))
-OBJ = $(addprefix $(OBJ_DIR), $(OBJ_LIST))
+HDRS :=			$(addprefix $(INC_PATH), $(addsuffix .h, $(HFILES)))
+SRCS :=			$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
+OBJS :=			$(addprefix $(OBJ_PATH), $(SRCS:%.c=%.o))
 
-GREEN = \033[0;32m
-RED = \033[0;31m
-RESET = \033[0m
-
-.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_DIR) $(OBJ)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INC) $(OBJ) -o $(NAME)
-	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+$(NAME): $(LIB) $(OBJ_PATH) $(OBJS)
+	@ $(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
+$(LIB):
+	@ $(MAKE) -C $(dir $@) $(notdir $@)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@echo "$(NAME): $(GREEN)$(OBJ_DIR) was created$(RESET)"
+$(OBJ_PATH):
+	mkdir -p $(OBJ_PATH)$(SRC_PATH)
+$(OBJ_PATH)%.o: %.c $(HDRS)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS)
-	@$(CC) $(FLAGS) -c $(INC) $< -o $@
-	@echo "$(GREEN).$(RESET)\c"
+clean: mclean
+	make clean -C $(LIB_PATH)
+fclean: mfclean
+	make fclean -C $(LIB_PATH)
+re: fclean all
 
-$(LIBFT):
-	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
-	@$(MAKE) -sC $(LIBFT_DIR)
-
-clean:
-	@$(MAKE) -sC $(LIBFT_DIR) clean
-	@rm -rf $(OBJ_DIR)
-	@echo "$(NAME): $(RED)$(OBJ_DIR) was deleted$(RESET)"
-	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
-
-fclean: clean
-	@rm -f $(NAME)
-	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
-
-re:
-	@$(MAKE) fclean
-	@$(MAKE) all
+mclean:
+	rm -f $(OBJS) $(DEPS)
+mfclean:
+	rm -f $(NAME)
+	rm -rf $(OBJ_PATH)
+mre: mfclean all
 

@@ -12,82 +12,85 @@
 
 #include "libft.h"
 
-static t_list	*ft_lstsearchfd(const int fd, t_list *start)
+t_chain	*lst_make(t_chain **sp, int fd)
 {
-	t_list	*end;
-	char	*str;
+	t_chain		*first;
+	t_chain		*send;
 
-	str = (char *)malloc(1);
-	str[0] = '\0';
-	if (start == NULL)
-		return (ft_lstnew(str, (size_t)fd));
-	end = start;
-	while (end->next && end->content_size != (size_t)fd)
-		end = end->next;
-	if (end->content_size == (size_t)fd)
+	if (!*sp)
+		(*sp = (t_chain *)ft_memalloc(sizeof(t_chain)))
+		&& ((*sp)->fd = fd);
+	first = *sp;
+	while (sp)
 	{
-		while (start != end && start)
+		if ((*sp)->fd == fd)
+			break ;
+		if ((*sp)->next == NULL)
 		{
-			end = ft_lstradd(end, start);
-			start = start->next;
+			(*sp)->next = (t_chain *)ft_memalloc(sizeof(t_chain));
+			(*sp) = (*sp)->next;
+			(*sp)->fd = fd;
+			break ;
 		}
-		return (end);
+		*sp = (*sp)->next;
 	}
-	end = ft_lstnew(str, (size_t)fd);
-	end->next = start;
-	return (end);
+	send = (*sp);
+	(*sp) = first;
+	return (send);
 }
 
-static int		ft_cut_cont(void **vo, int was_read, char **line)
+int		n_circle(t_chain *cur)
 {
-	char	**str;
-	char	*tmp;
-	int		i;
+	char			*buff;
+	char			*tmp;
+	int				red;
 
-	str = (char **)vo;
-	i = 0;
-	while ((*str)[i] != '\n' && (*str)[i])
-		i++;
-	if ((*str)[i] == '\n' && was_read <= BUFF_SIZE)
+	if (cur->save && (buff = ft_strchr(cur->save, '\n')))
+		return (1);
+	buff = malloc(sizeof(char) * (BUFF_SIZE + 1));
+	while ((red = read(cur->fd, buff, BUFF_SIZE)) > 0)
 	{
-		if (!(*line = ft_strsub(*str, 0, i)) ||
-			!(tmp = ft_strsub(*str, i + 1, ft_strlen(*str) - i - 1)))
-			return (-1);
-		free(*str);
-		*str = tmp;
+		buff[red] = '\0';
+		if (!cur->save)
+			(cur->save) = ft_strnew(1);
+		tmp = cur->save;
+		cur->save = ft_strjoin(cur->save, buff);
+		free(tmp);
+		if (ft_strchr(buff, '\n'))
+			break ;
 	}
-	else
-	{
-		*line = ft_strsub(*str, 0, i);
-		free(*str);
-		*str = ft_strnew(0);
-	}
+	free(buff);
+	if (red < 0)
+		return (-1);
+	if (red == 0 && (cur->save == NULL || cur->save[0] == '\0'))
+		return (0);
 	return (1);
 }
 
-int				get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-	static t_list	*lst = NULL;
-	char			str[BUFF_SIZE + 1];
-	int				was_read;
+	static t_chain	*sp;
+	t_chain			*cur;
+	int				r;
+	char			*ll;
 	char			*tmp;
 
-	if (fd < 0 || !(lst = ft_lstsearchfd(fd, lst)))
+	if (fd < 0 || BUFF_SIZE < 1)
 		return (-1);
-	was_read = BUFF_SIZE;
-	while (!(ft_strchr(lst->content, '\n')))
+	cur = lst_make(&sp, fd);
+	if ((r = n_circle(cur)) == -1 || r == 0)
+		return (r);
+	if ((ll = ft_strchr(cur->save, '\n')))
 	{
-		if ((was_read = read(fd, str, BUFF_SIZE)) < 0)
-			return (-1);
-		if (was_read == 0 && *((char *)lst->content) == '\0')
-			return (0);
-		str[was_read] = '\0';
-		if (!(tmp = ft_strjoin(lst->content, str)))
-			return (-1);
-		free(lst->content);
-		lst->content = tmp;
-		if (was_read < BUFF_SIZE)
-			break ;
+		*line = ft_strsub(cur->save, 0, ll - (cur->save));
+		tmp = cur->save;
+		cur->save = ft_strdup(ll + 1);
+		free(tmp);
 	}
-	return (ft_cut_cont(&(lst->content), was_read, line));
+	else
+	{
+		*line = ft_strdup(cur->save);
+		ft_strdel(&cur->save);
+	}
+	return (1);
 }

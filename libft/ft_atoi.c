@@ -12,36 +12,31 @@
 
 #include "libft.h"
 
-static int		ft_isspace(int c)
-{
-	return ((c >= 9 && c <= 13) || c == ' ');
-}
-
 int				ft_atoi(const char *str)
 {
-	long	res;
-	int		sign;
-	int		any;
+	int					i;
+	unsigned long int	sum;
+	int					minus;
 
-	any = 0;
-	sign = 0;
-	res = 0;
-	while (*str && ft_isspace(*str))
-		str++;
-	if (*str == '-')
-		sign++;
-	if (*str == '-' || *str == '+')
-		str++;
-	str--;
-	while (*(++str) && ft_isdigit(*str))
-		if (any < 0 || res > LONG_MAX / 10 ||
-			(res == LONG_MAX / 10 && (*str - '0') > LONG_MAX % 10))
-			any = -1;
-		else
-			res = res * 10 + (*str - '0');
-	if (any < 0)
-		res = (!sign) ? -1 : 0;
-	else
-		res = ((sign) ? -res : res);
-	return (res);
+	i = 0;
+	sum = 0;
+	minus = 1;
+	while (str[i] == 32 || str[i] == '\n' || str[i] == '\v'
+		   || str[i] == '\r' || str[i] == '\t' || str[i] == '\f')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			minus = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		sum = sum * 10 + str[i++] - '0';
+		if (sum >= 9223372036854775807 && minus == 1)
+			return (-1);
+		if (sum > 9223372036854775807 && minus == -1)
+			return (0);
+	}
+	return ((int)sum * minus);
 }

@@ -317,6 +317,17 @@ Piece 2 3:
 *.*
 ***
 <got (O): [9, 6]
+
+
+# -------------------------------------------- #
+#                                              #
+# 42 / filler VM Developped by: Hcao - Abanlin #
+#                                              #
+# -------------------------------------------- #
+launched ./yjohns.filler
+$$$ exec p1 : [./yjohns.filler]
+launched resources/players/superjeannot.filler
+$$$ exec p2 : [resources/players/superjeannot.filler]
 Plateau 15 17:
     01234567890123456
 000 .................
@@ -340,6 +351,15 @@ Piece 2 2:
 
 
 
+# -------------------------------------------- #
+#                                              #
+# 42 / filler VM Developped by: Hcao - Abanlin #
+#                                              #
+# -------------------------------------------- #
+launched ./pbondoer.filler
+$$$ exec p1 : [./pbondoer.filler]
+launched resources/players/superjeannot.filler
+$$$ exec p2 : [resources/players/superjeannot.filler]
 
 
 Plateau 100 99:

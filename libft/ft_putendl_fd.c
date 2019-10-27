@@ -14,16 +14,8 @@
 
 void		ft_putendl_fd(char const *s, int fd)
 {
-	char	c;
-
-	c = '\n';
-	if (s != NULL && fd >= 0)
-	{
-		while (*s != '\0')
-		{
-			write(fd, s, 1);
-			s++;
-		}
-		write(fd, &c, 1);
-	}
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
