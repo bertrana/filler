@@ -49,7 +49,6 @@ int		count_dst(t_filler *f, int y, int x)
 	int		man;
 
 	i = 0;
-	j = 0;
 	m = INT32_MAX;
 	while (f->B_MAP[i])
 	{
