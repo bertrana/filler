@@ -91,6 +91,7 @@ int		get_next_line(const int fd, char **line)
 	{
 		*line = ft_strdup(cur->save);
 		ft_strdel(&cur->save);
+		free(cur);
 	}
 	return (1);
 }

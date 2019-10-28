@@ -24,12 +24,13 @@ void	read_map(t_filler *f, char *line)
 	w = ft_atoi(ft_strchr(line, ' '));
 	h = ft_atoi(ft_strchr(ft_strchr(line, ' ') + 1, ' '));
 	f->board->y = w;
-    f->board->x = h;
+	f->board->x = h;
 	if (!(f->B_MAP = (char **)malloc(sizeof(char *) * (f->board->y + 1))))
 		exit(1);
 	f->B_MAP[f->board->y] = NULL;
-	while(get_next_line(STDIN_FILENO, &line) && !ft_strstr(line, "0123"))
+	while (get_next_line(STDIN_FILENO, &line) && !ft_strstr(line, "0123"))
 		free(line);
+	free(line);
 	while (i < f->board->y && get_next_line(STDIN_FILENO, &line))
 	{
 		f->B_MAP[i] = ft_strdup(line + 4);
@@ -56,11 +57,16 @@ void	free_arrays(t_filler *f)
 		free(f->B_MAP[i]);
 		i++;
 	}
+	free(f->B_MAP);
+	free(f->board);
+	i = 0;
 	while (i < f->piece->y)
 	{
 		free(f->P_MAP[i]);
 		i++;
 	}
+	free(f->P_MAP);
+	free(f->piece);
 }
 
 void	read_piece(t_filler *f, char *line)
@@ -83,13 +89,13 @@ void	read_piece(t_filler *f, char *line)
 	}
 }
 
-int 	main(void)
+int		main(void)
 {
 	char		*line;
 	t_filler	*filler;
 
 	filler = (t_filler *)malloc(sizeof(t_filler));
-	while(get_next_line(STDIN_FILENO, &line) > 0)
+	while (get_next_line(STDIN_FILENO, &line) > 0)
 	{
 		if ((ft_strstr(line, PLAYER_S) && line[0] == '$'))
 			take_char(filler, line);
@@ -103,5 +109,6 @@ int 	main(void)
 		}
 		free(line);
 	}
+	free(filler);
 	return (0);
 }

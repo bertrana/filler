@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <limits.h>
 # define BUFF_SIZE 21
+# define ABS(Value) ((Value) < 0 ? -(Value) : (Value))
 
 typedef struct		s_list
 {

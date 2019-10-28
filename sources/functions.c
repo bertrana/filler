@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.c                                           :+:      :+:    :+:   */
+/*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjohns <yjohns@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "filler.h"
 
-void	get_fig_coord(t_filler *f)
+void	piece_coord(t_filler *f)
 {
 	int		i;
 	int		j;
@@ -35,10 +35,10 @@ void	get_fig_coord(t_filler *f)
 	}
 }
 
-bool is_full(t_filler *f, int i, int j)
+bool	is_full(t_filler *f, int i, int j)
 {
 	return (!(i + 1 < f->board->y && j + 1 < f->board->x
-			 && i >= 0 && j >= 0));
+			&& i >= 0 && j >= 0));
 }
 
 int		count_dst(t_filler *f, int y, int x)

@@ -12,24 +12,17 @@
 
 #ifndef FILLER_H
 # define FILLER_H
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include "libft.h"
-# include  <string.h>
-
+# include <string.h>
 # define B_MAP board->map
 # define P_MAP piece->map
-
-# define X		0
-# define Y		1
+# define X	0
+# define Y	1
 # define MAP_Y_X	f->B_MAP[res[Y]][res[X]]
-
 # define PLAYER_S "yjohns"
-
-# define ABS(Value) ((Value) < 0 ? -(Value) : (Value))
-
 
 typedef struct	s_map
 {
@@ -44,9 +37,8 @@ typedef struct	s_filler
 	char		player;
 	t_map		*board;
 	t_map		*piece;
-	int			x; //result
-	int 		y;
-
+	int			x;
+	int			y;
 	short int	piece_x[20];
 	short int	piece_y[20];
 	int			piece_num;
@@ -54,16 +46,9 @@ typedef struct	s_filler
 	int			index;
 }				t_filler;
 
-
 void			game(t_filler *f);
-
-bool			manage_error(void);
-
-void			player_ident(t_filler *f, char *line);
-void			maps_create(t_filler *f, bool x);
-
-bool is_full(t_filler *f, int i, int j);
+bool			is_full(t_filler *f, int i, int j);
 int				count_dst(t_filler *f, int y, int x);
-void			get_fig_coord(t_filler *f);
+void			piece_coord(t_filler *f);
 
 #endif
